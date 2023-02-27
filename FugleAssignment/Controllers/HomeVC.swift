@@ -10,9 +10,24 @@ import UIKit
 
 class HomeVC: UIViewController, Coordinating {
     var coordinator: Coordinator?
+    var viewModel = HomeViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        title = "Home"
+        setupBinders()
+        navigationToLaunch()
+    }
+    
+    func navigationToLaunch() {
+        let event = HomeEvent.navigationToLaunch
+        coordinator?.eventOccurred(with: event)
+    }
+    
+    private func setupBinders() {
+        viewModel.finishUpdate.bind { isFinishUpdate in
+            // TODO dismiss launch vc
+        }
     }
 }

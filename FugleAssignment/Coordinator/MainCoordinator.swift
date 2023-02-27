@@ -14,35 +14,28 @@ class MainCoordinator: Coordinator {
     
     var children: [Coordinator] = []
     
-    var navigationController: UINavigationController?
-    var tabBarController: UITabBarController?
-    var vc: UIViewController?
-    
     lazy var homeCoordinator: Coordinator = HomeCoordinator()
     lazy var trackCoordinator: Coordinator = TrackCoordinator()
+    lazy var rootViewController: UIViewController  = UITabBarController()
     
-    func start() {
+    func start() -> UIViewController {
         
-        homeCoordinator.navigationController = navigationController
+        let homeViewController = homeCoordinator.start()
         homeCoordinator.parentCoordinator = self
-        children.append(homeCoordinator)
-        homeCoordinator.start()
+        homeViewController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "homekit"), tag: 0)
         
-        trackCoordinator.navigationController = navigationController
+        let trackViewController = trackCoordinator.start()
         trackCoordinator.parentCoordinator = self
-        children.append(trackCoordinator)
-        trackCoordinator.start()
+        trackViewController.tabBarItem = UITabBarItem(title: "Track", image: UIImage(systemName: "doc.plaintext"), tag: 1)
         
-        if let homeVC = homeCoordinator.vc,
-           let trackVC = trackCoordinator.vc {
-            (tabBarController)?.viewControllers = [homeVC,trackVC]
-        }
+        (rootViewController as? UITabBarController)?.viewControllers = [homeViewController, trackViewController]
+                
+        return rootViewController
         
     }
+        
     
-    func eventOccurred(with type: Event) {
-        
-    }
+    func eventOccurred(with type: Event) {}
     
     
 }

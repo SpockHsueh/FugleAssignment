@@ -13,21 +13,36 @@ class HomeCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     
     var children: [Coordinator] = []
-    
-    var navigationController: UINavigationController?
-    
-    var tabBarController: UITabBarController?
-    
-    var vc: UIViewController?
-    
-    func start() {
+        
+    lazy var rootViewController: UIViewController = UIViewController()
+
+    func start() -> UIViewController {
         let homeVC = HomeVC()
-        homeVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "homekit"), tag: 0)
-        self.vc = homeVC
+        homeVC.coordinator = self
+        rootViewController = UINavigationController(rootViewController: homeVC)
+        return rootViewController
     }
     
     func eventOccurred(with type: Event) {
+        guard let type = type as? HomeEvent else {
+            return
+        }
         
+        switch type {
+        case .navigationToHome:
+            _ = navigationRootViewController?.popToRootViewController(animated: true)
+            break
+        case .navigationToLaunch:
+            let launchVC = LaunchVC()
+            _ = navigationRootViewController?.pushViewController(launchVC, animated: true)
+            navigationRootViewController?.setNavigationBarHidden(true, animated: false)
+            navigationRootViewController?.tabBarController?.tabBar.isHidden = true
+            break
+        }
+    }
+    
+    deinit {
+        print("HomeCoordinator deinit")
     }
     
     

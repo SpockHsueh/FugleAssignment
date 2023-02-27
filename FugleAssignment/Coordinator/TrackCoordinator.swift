@@ -9,25 +9,25 @@ import Foundation
 import UIKit
 
 class TrackCoordinator: Coordinator {
+    
     var parentCoordinator: Coordinator?
     
     var children: [Coordinator] = []
     
-    var navigationController: UINavigationController?
+    lazy var rootViewController: UIViewController = UIViewController()
     
-    var tabBarController: UITabBarController?
-    
-    var vc: UIViewController?
-    
-    func start() {
-        let tackVC = TrackVC()
-        tackVC.tabBarItem = UITabBarItem(title: "Track", image: UIImage(systemName: "oc.plaintext"), tag: 0)
-        self.vc = tackVC
+    func start() -> UIViewController {
+        let trackVC = TrackVC()
+        trackVC.coordinator = self
+        rootViewController = UINavigationController(rootViewController: trackVC)
+        return rootViewController
     }
     
     func eventOccurred(with type: Event) {
         
     }
     
-    
+    deinit {
+        print("TrackCoordinator deinit")
+    }
 }

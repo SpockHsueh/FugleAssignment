@@ -1,5 +1,5 @@
 //
-//  TrackVC.swift
+//  LaunchVC.swift
 //  FugleAssignment
 //
 //  Created by 薛宇振 on 2023/2/27.
@@ -8,12 +8,10 @@
 import Foundation
 import UIKit
 
-class TrackVC: UIViewController, Coordinating {
-    var coordinator: Coordinator?
-    
+class LaunchVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Track"
-        view.backgroundColor = .blue
+        view.backgroundColor = .yellow
+        title = "Launch"
     }
 }
