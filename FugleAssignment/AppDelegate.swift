@@ -10,10 +10,20 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        let tabBarVC = UITabBarController()
+        
+        let coordinator = MainCoordinator()
+        coordinator.tabBarController = tabBarVC
+        
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        window.rootViewController = tabBarVC
+        window.makeKeyAndVisible()
+        self.window = window
+        
+        coordinator.start()
         return true
     }
 
