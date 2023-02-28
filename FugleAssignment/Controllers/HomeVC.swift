@@ -10,7 +10,7 @@ import UIKit
 
 class HomeVC: UIViewController, Coordinating {
     var coordinator: Coordinator?
-    var viewModel = HomeViewModel()
+    var viewModel = HomeViewModel(getCategoryWithCompanyService: GetCategoriesWithCompanyService.self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +18,8 @@ class HomeVC: UIViewController, Coordinating {
         title = "Home"
         setupBinders()
         navigationToLaunch()
+        
+        viewModel.getGategoriesWithCompany()
     }
     
     func navigationToLaunch() {

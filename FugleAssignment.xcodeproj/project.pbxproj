@@ -21,6 +21,8 @@
 		6A03477C29AC8257002DBCC9 /* LaunchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A03477B29AC8257002DBCC9 /* LaunchVC.swift */; };
 		6A03477E29AC82BF002DBCC9 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A03477D29AC82BF002DBCC9 /* HomeViewModel.swift */; };
 		6A03478029AC82E9002DBCC9 /* ObserableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A03477F29AC82E9002DBCC9 /* ObserableObject.swift */; };
+		6A03478329AD2344002DBCC9 /* GetCategoriesWithCompanyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A03478229AD2344002DBCC9 /* GetCategoriesWithCompanyService.swift */; };
+		6A03478629AD2513002DBCC9 /* CategoryWithCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A03478529AD2513002DBCC9 /* CategoryWithCompany.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		6A03477B29AC8257002DBCC9 /* LaunchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchVC.swift; sourceTree = "<group>"; };
 		6A03477D29AC82BF002DBCC9 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		6A03477F29AC82E9002DBCC9 /* ObserableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserableObject.swift; sourceTree = "<group>"; };
+		6A03478229AD2344002DBCC9 /* GetCategoriesWithCompanyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCategoriesWithCompanyService.swift; sourceTree = "<group>"; };
+		6A03478529AD2513002DBCC9 /* CategoryWithCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryWithCompany.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +76,8 @@
 		6A03475329A82EC5002DBCC9 /* FugleAssignment */ = {
 			isa = PBXGroup;
 			children = (
+				6A03478429AD2506002DBCC9 /* Models */,
+				6A03478129AD2323002DBCC9 /* Service */,
 				6A03477A29AC815A002DBCC9 /* ViewModel */,
 				6A03476D29A9079D002DBCC9 /* Controllers */,
 				6A03476829A90561002DBCC9 /* Coordinator */,
@@ -113,6 +119,22 @@
 				6A03477D29AC82BF002DBCC9 /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		6A03478129AD2323002DBCC9 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				6A03478229AD2344002DBCC9 /* GetCategoriesWithCompanyService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		6A03478429AD2506002DBCC9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6A03478529AD2513002DBCC9 /* CategoryWithCompany.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,11 +213,13 @@
 				6A03477729AC7BCC002DBCC9 /* HomeVC.swift in Sources */,
 				6A03475529A82EC5002DBCC9 /* AppDelegate.swift in Sources */,
 				6A03477E29AC82BF002DBCC9 /* HomeViewModel.swift in Sources */,
+				6A03478329AD2344002DBCC9 /* GetCategoriesWithCompanyService.swift in Sources */,
 				6A03475729A82EC5002DBCC9 /* SceneDelegate.swift in Sources */,
 				6A03477129A90B7D002DBCC9 /* MainCoordinator.swift in Sources */,
 				6A03477C29AC8257002DBCC9 /* LaunchVC.swift in Sources */,
 				6A03477929AC7D82002DBCC9 /* TrackVC.swift in Sources */,
 				6A03477529A90D0A002DBCC9 /* TrackCoordinator.swift in Sources */,
+				6A03478629AD2513002DBCC9 /* CategoryWithCompany.swift in Sources */,
 				6A03477329A90D03002DBCC9 /* HomeCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

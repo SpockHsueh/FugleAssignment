@@ -10,5 +10,16 @@ import Foundation
 class HomeViewModel {
     var finishUpdate: ObserableObject<Bool> = ObserableObject(false)
     
+    private let getCategoryWithCompanyService: GetCategoriesWithCompanyServiceProtocol.Type
     
+    init(getCategoryWithCompanyService: GetCategoriesWithCompanyServiceProtocol.Type) {
+        self.getCategoryWithCompanyService = getCategoryWithCompanyService
+    }
+    
+    func getGategoriesWithCompany() {
+        getCategoryWithCompanyService.getCategories { [weak self] result in
+            print(result)
+        }
+    }
 }
+
