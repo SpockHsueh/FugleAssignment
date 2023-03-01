@@ -67,6 +67,8 @@ class HomeVC: UIViewController, Coordinating {
     }
 }
 
+// MARK: - Extension
+
 extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cellData.count

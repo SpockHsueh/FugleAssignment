@@ -19,7 +19,7 @@ class HomeCoordinator: Coordinator {
     func start() -> UIViewController {
         let homeVC = HomeVC()
         homeVC.coordinator = self
-        rootViewController = UINavigationController(rootViewController: homeVC)
+        rootViewController = UINavigationController(rootViewController: homeVC)        
         return rootViewController
     }
     
@@ -34,17 +34,19 @@ class HomeCoordinator: Coordinator {
             navigationRootViewController?.navigationBar.prefersLargeTitles = true
             navigationRootViewController?.setNavigationBarHidden(false, animated: false)
             navigationRootViewController?.tabBarController?.tabBar.isHidden = false
-            break
+            
         case .navigationToLaunch:
             let launchVC = LaunchVC()
             _ = navigationRootViewController?.pushViewController(launchVC, animated: true)
             navigationRootViewController?.setNavigationBarHidden(true, animated: false)
             navigationRootViewController?.tabBarController?.tabBar.isHidden = true
-            break
+            
         case .navigationToDetail(let cellData, let title):
             let categoryListDetailVC = CategoryListDetailVC()
             categoryListDetailVC.cellData = cellData
             categoryListDetailVC.title = title
+            navigationRootViewController?.navigationBar.backgroundColor = .white
+            navigationRootViewController?.navigationBar.tintColor = .black
             _ = navigationRootViewController?.pushViewController(categoryListDetailVC, animated: true)
         }
     }

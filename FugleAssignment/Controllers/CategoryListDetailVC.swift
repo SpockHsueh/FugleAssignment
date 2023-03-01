@@ -30,17 +30,18 @@ class CategoryListDetailVC: UIViewController, Coordinating {
         return table
     }()
     
-    // MARK: - UI Component
-        
+    // MARK: - Lift Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
         view.addSubview(tableView)
         tableView.frame = view.bounds
-    }    
-        
+    }
 }
+
+// MARK: - Extension
 
 extension CategoryListDetailVC: UITableViewDelegate, UITableViewDataSource {
     
