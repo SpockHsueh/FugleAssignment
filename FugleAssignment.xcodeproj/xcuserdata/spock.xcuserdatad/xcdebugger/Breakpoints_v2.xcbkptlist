@@ -119,16 +119,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CDF4D179-86E3-4B86-AF0F-B7F162143288"
+            uuid = "9FFFE7D0-5482-4065-983C-267B7E7583A2"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FugleAssignment/Controllers/HomeVC.swift"
+            filePath = "FugleAssignment/Coordinator/HomeCoordinator.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "tableView(_:cellForRowAt:)"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "eventOccurred(with:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

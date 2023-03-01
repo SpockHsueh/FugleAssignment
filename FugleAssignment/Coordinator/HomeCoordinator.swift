@@ -31,6 +31,9 @@ class HomeCoordinator: Coordinator {
         switch type {
         case .navigationToHome:
             _ = navigationRootViewController?.popToRootViewController(animated: true)
+            navigationRootViewController?.navigationBar.prefersLargeTitles = true
+            navigationRootViewController?.setNavigationBarHidden(false, animated: false)
+            navigationRootViewController?.tabBarController?.tabBar.isHidden = false
             break
         case .navigationToLaunch:
             let launchVC = LaunchVC()
@@ -38,6 +41,11 @@ class HomeCoordinator: Coordinator {
             navigationRootViewController?.setNavigationBarHidden(true, animated: false)
             navigationRootViewController?.tabBarController?.tabBar.isHidden = true
             break
+        case .navigationToDetail(let cellData, let title):
+            let categoryListDetailVC = CategoryListDetailVC()
+            categoryListDetailVC.cellData = cellData
+            categoryListDetailVC.title = title
+            _ = navigationRootViewController?.pushViewController(categoryListDetailVC, animated: true)
         }
     }
     

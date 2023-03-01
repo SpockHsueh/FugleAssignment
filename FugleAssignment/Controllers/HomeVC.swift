@@ -21,7 +21,7 @@ class HomeVC: UIViewController, Coordinating {
     lazy var tableView: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
-        table.register(HomeCell.self, forCellReuseIdentifier: HomeCell.identifier)        
+        table.register(CategoryCell.self, forCellReuseIdentifier: CategoryCell.identifier)
         table.delegate = self
         table.dataSource = self
         return table
@@ -35,7 +35,7 @@ class HomeVC: UIViewController, Coordinating {
         tableView.frame = view.bounds
         
         view.backgroundColor = .white
-        title = "Home"
+        title = "產業別"
         
         setupBinders()
         navigationToLaunch()
@@ -73,11 +73,11 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: HomeCell.identifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.identifier, for: indexPath)
         let data = cellData[indexPath.row]
         let text = TSECategory(rawValue: data.first?.code ?? "")?.value() ?? ""
         let count = data.count
-        let cellDataModel = HomeCellDataModel(text: "\(text)(\(count))", image: UIImage(named: "rigntButton")!)
+        let cellDataModel = CategoryCellDataModel(text: "\(text)(\(count))", image: UIImage(named: "rightButton")!)
         if let cell = cell as? CellConfigurable
         {
             cell.setup(dataModel: cellDataModel)
@@ -88,7 +88,14 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 70
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let companies = cellData[indexPath.row].flatMap{ $0.companies }
+        let title = TSECategory(rawValue: cellData[indexPath.row].first?.code ?? "")?.value() ?? ""
+        let event = HomeEvent.navigationToDetail(companies, title)
+        coordinator?.eventOccurred(with: event)
     }
     
 }
