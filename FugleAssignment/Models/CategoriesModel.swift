@@ -1,5 +1,5 @@
 //
-//  CategoryWithCompany.swift
+//  CategoriesModel.swift
 //  FugleAssignment
 //
 //  Created by 薛宇振 on 2023/2/28.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CategoryWithCompanyModel: Codable {
+struct CategoriesModel: Codable {
     let name: String
     let category: String
     let code: String

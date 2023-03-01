@@ -14,11 +14,11 @@ enum GetCategoriesWithCompanyError: Error {
 }
 
 protocol GetCategoriesWithCompanyServiceProtocol {
-    static func getCategories(completion: @escaping (Result<[CategoryWithCompanyModel], GetCategoriesWithCompanyError>) -> Void)
+    static func getCategories(completion: @escaping (Result<[CategoriesModel], GetCategoriesWithCompanyError>) -> Void)
 }
 
 struct GetCategoriesWithCompanyService: GetCategoriesWithCompanyServiceProtocol {
-    static func getCategories(completion: @escaping (Result<[CategoryWithCompanyModel], GetCategoriesWithCompanyError>) -> Void) {
+    static func getCategories(completion: @escaping (Result<[CategoriesModel], GetCategoriesWithCompanyError>) -> Void) {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "openapi.twse.com.tw"
@@ -64,7 +64,7 @@ struct GetCategoriesWithCompanyService: GetCategoriesWithCompanyServiceProtocol 
             }
             
             do {
-                let listResult = try JSONDecoder().decode([CategoryWithCompanyModel].self, from: data)
+                let listResult = try JSONDecoder().decode([CategoriesModel].self, from: data)
                 DispatchQueue.main.async {
                     completion(.success(listResult))
                 }
