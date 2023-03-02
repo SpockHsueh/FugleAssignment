@@ -36,7 +36,7 @@ class HomeViewModel {
                 
             case .success(let categories):
                 categories.forEach { item in
-                    let company = Company(name: item.name, code: item.code)
+                    let company = Company(param: item)
                     var record = self?.categoryWithCompanies[item.category] ?? []
                     let value = CategoryWithCompaniesModel(code: item.category, companies: [company])
                     record.isEmpty ? record = [value] : record.append(value)
