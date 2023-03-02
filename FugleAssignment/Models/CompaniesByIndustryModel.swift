@@ -7,13 +7,14 @@
 
 import Foundation
 
-struct CategoryWithCompaniesModel {
+struct CompaniesByIndustryModel {
     let code: String
     let companies: [Company]
 }
 
 struct Company {
     let name: String
+    let category: String
     let code: String
     let chairman: String
     let generaManager: String
@@ -29,8 +30,9 @@ struct Company {
 }
 
 extension Company {
-    init(param: CategoriesModel) {
+    init(param: ListWithIndustryAndCompanyModel) {
         self.init(name: param.name,
+                  category: param.category,
                   code: param.code,
                   chairman: param.chairman,
                   generaManager: param.generaManager,

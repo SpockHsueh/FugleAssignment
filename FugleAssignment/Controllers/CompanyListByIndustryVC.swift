@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class CategoryListDetailVC: UIViewController, Coordinating {
+class CompanyListByIndustryVC: UIViewController, Coordinating {
     
     // MARK: - Properties
 
@@ -39,16 +39,19 @@ class CategoryListDetailVC: UIViewController, Coordinating {
         view.addSubview(tableView)
         tableView.frame = view.bounds
     }
+    
+    deinit {
+        print("CategoryListDetailVC deinit")
+    }
 }
 
 // MARK: - Extension
 
-extension CategoryListDetailVC: UITableViewDelegate, UITableViewDataSource {
+extension CompanyListByIndustryVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         cellData.count
     }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.identifier, for: indexPath)
@@ -65,6 +68,12 @@ extension CategoryListDetailVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let company = cellData[indexPath.row]
+        let event = CompanyListByIndustryCoordinatorEvent.navigationToCompanyDetail(company)
+        coordinator?.eventOccurred(with: event)
     }
     
 }

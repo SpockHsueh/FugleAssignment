@@ -13,7 +13,11 @@ protocol Event {}
 enum HomeEvent: Event {
     case navigationToLaunch
     case navigationToHome
-    case navigationToDetail([Company], String)
+    case navigationToCompaniesByIndustry([Company], String)
+}
+
+enum CompanyListByIndustryCoordinatorEvent: Event {
+    case navigationToCompanyDetail(Company)
 }
 
 protocol Coordinator: AnyObject {

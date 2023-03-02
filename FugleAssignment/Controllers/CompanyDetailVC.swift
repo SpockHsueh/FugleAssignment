@@ -13,6 +13,11 @@ class CompanyDetailVC: UIViewController, Coordinating {
     // MARK: - Properties
 
     var coordinator: Coordinator?
+    var viewData: Company? {
+        didSet {
+            setupViewWith(viewData)
+        }
+    }
     
     // MARK: - UI Component
     
@@ -27,6 +32,8 @@ class CompanyDetailVC: UIViewController, Coordinating {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .blue
+        label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+
         return label
     }()
     
@@ -36,6 +43,12 @@ class CompanyDetailVC: UIViewController, Coordinating {
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
         return imageView
+    }()
+
+    lazy var headerInfoRowStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
     }()
     
     lazy var chairmanLabel: UILabel = {
@@ -107,24 +120,32 @@ class CompanyDetailVC: UIViewController, Coordinating {
     lazy var basicInfoRow1StackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .leading
+        stackView.distribution = .equalSpacing
         return stackView
     }()
     
     lazy var basicInfoRow2StackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .leading
+        stackView.distribution = .equalSpacing
         return stackView
     }()
     
     lazy var basicInfoRow3StackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .leading
+        stackView.distribution = .equalSpacing
         return stackView
     }()
     
     lazy var basicInfoRow4StackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .leading
+        stackView.distribution = .equalSpacing
         return stackView
     }()
         
@@ -283,21 +304,48 @@ class CompanyDetailVC: UIViewController, Coordinating {
     
     // MARK: - Private Function
     
+    private func setupViewWith(_ data: Company?) {
+        
+        guard let data = data else {
+            return
+        }
+        
+        companyNameLabel.text = data.name
+        actionImageView.image = UIImage(named: "earth")
+        chairmanValueLabel.text = data.chairman
+        generaManagerValueLabel.text = data.generaManager
+        industryCategoryValueLabel.text = TSECategory(rawValue: data.category)?.value() ?? ""
+        establishedValueLabel.text = data.established
+        listingValueLabel.text = data.listing
+        phoneValueLabel.text = data.phone
+        uniformNumbersValueLabel.text = data.uniformNumber
+        addressValueLabel.text = data.address
+        capitalValueLabel.text = data.capital
+        parValuePerShareValueLabel.text = data.parValuePerShare
+        issuedSharesValueLabel.text = data.issuedShares
+        specialSharesValueLabel.text = data.specialShares
+    }
+    
     private func setupConstraints() {
         setupStackView()
         
         NSLayoutConstraint.activate([
+            
+            actionImageView.widthAnchor.constraint(equalToConstant: 20),
+            
             basicInfoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             basicInfoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            basicInfoLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            
-            companyNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            companyNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            companyNameLabel.topAnchor.constraint(equalTo: basicInfoLabel.bottomAnchor, constant: 10),
-            
+            basicInfoLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            basicInfoLabel.widthAnchor.constraint(equalToConstant: 20),
+                        
+            headerInfoRowStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            headerInfoRowStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            headerInfoRowStackView.topAnchor.constraint(equalTo: basicInfoLabel.bottomAnchor, constant: 20),
+            headerInfoRowStackView.heightAnchor.constraint(equalToConstant: 20),
+                        
             basicInfoRow1StackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             basicInfoRow1StackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            basicInfoRow1StackView.topAnchor.constraint(equalTo: companyNameLabel.bottomAnchor, constant: 10),
+            basicInfoRow1StackView.topAnchor.constraint(equalTo: companyNameLabel.bottomAnchor, constant: 20),
             
             basicInfoRow2StackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             basicInfoRow2StackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
@@ -305,7 +353,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
             
             basicInfoRow3StackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             basicInfoRow3StackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            basicInfoRow3StackView.topAnchor.constraint(equalTo: basicInfoRow2StackView.bottomAnchor, constant: 10),
+            basicInfoRow3StackView.topAnchor.constraint(equalTo: basicInfoRow2StackView.bottomAnchor, constant: 20),
             
             basicInfoRow4StackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             basicInfoRow4StackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
@@ -313,7 +361,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
             
             contactInfoRow1StackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             contactInfoRow1StackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            contactInfoRow1StackView.topAnchor.constraint(equalTo: basicInfoRow4StackView.bottomAnchor, constant: 10),
+            contactInfoRow1StackView.topAnchor.constraint(equalTo: basicInfoRow4StackView.bottomAnchor, constant: 20),
             
             contactInfoRow2StackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             contactInfoRow2StackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
@@ -321,7 +369,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
             
             contactInfoRow3StackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             contactInfoRow3StackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            contactInfoRow3StackView.topAnchor.constraint(equalTo: contactInfoRow2StackView.bottomAnchor, constant: 10),
+            contactInfoRow3StackView.topAnchor.constraint(equalTo: contactInfoRow2StackView.bottomAnchor, constant: 20),
             
             contactInfoRow4StackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             contactInfoRow4StackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
@@ -329,23 +377,27 @@ class CompanyDetailVC: UIViewController, Coordinating {
             
             financeInfoRow1StackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             financeInfoRow1StackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            financeInfoRow1StackView.topAnchor.constraint(equalTo: contactInfoRow3StackView.bottomAnchor, constant: 10),
+            financeInfoRow1StackView.topAnchor.constraint(equalTo: contactInfoRow4StackView.bottomAnchor, constant: 20),
             
             financeInfoRow2StackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             financeInfoRow2StackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            financeInfoRow2StackView.topAnchor.constraint(equalTo: financeInfoRow1StackView.bottomAnchor, constant: 10),
+            financeInfoRow2StackView.topAnchor.constraint(equalTo: financeInfoRow1StackView.bottomAnchor, constant: 20),
             
             financeInfoRow3StackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             financeInfoRow3StackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            financeInfoRow3StackView.topAnchor.constraint(equalTo: financeInfoRow2StackView.bottomAnchor, constant: 10),
+            financeInfoRow3StackView.topAnchor.constraint(equalTo: financeInfoRow2StackView.bottomAnchor, constant: 20),
             
             financeInfoRow4StackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             financeInfoRow4StackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            financeInfoRow4StackView.topAnchor.constraint(equalTo: financeInfoRow3StackView.bottomAnchor, constant: 10),
+            financeInfoRow4StackView.topAnchor.constraint(equalTo: financeInfoRow3StackView.bottomAnchor, constant: 20),
         ])
     }
     
     private func setupStackView() {
+        
+        view.addSubview(basicInfoLabel)
+        view.addSubview(headerInfoRowStackView)
+        
         view.addSubview(basicInfoRow1StackView)
         view.addSubview(basicInfoRow2StackView)
         view.addSubview(basicInfoRow3StackView)
@@ -360,6 +412,10 @@ class CompanyDetailVC: UIViewController, Coordinating {
         view.addSubview(financeInfoRow2StackView)
         view.addSubview(financeInfoRow3StackView)
         view.addSubview(financeInfoRow4StackView)
+        
+        // header info
+        headerInfoRowStackView.addArrangedSubview(companyNameLabel)
+        headerInfoRowStackView.addArrangedSubview(actionImageView)
         
         // basic info
         basicInfoRow1StackView.addArrangedSubview(chairmanLabel)

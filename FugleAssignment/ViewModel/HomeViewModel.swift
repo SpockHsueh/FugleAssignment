@@ -10,11 +10,11 @@ import Foundation
 class HomeViewModel {
     var finishUpdate: ObserableObject<Bool> = ObserableObject(false)
     var getListErrorDescription: ObserableObject<String?> = ObserableObject(nil)
-    var listValue: ObserableObject<[String: [CategoryWithCompaniesModel]]?> = ObserableObject(nil)
+    var listValue: ObserableObject<[String: [CompaniesByIndustryModel]]?> = ObserableObject(nil)
     
     private let getCategoryWithCompanyService: GetCategoriesWithCompanyServiceProtocol.Type
 
-    private var categoryWithCompanies: [String: [CategoryWithCompaniesModel]] = [:]
+    private var companiesByIndustry: [String: [CompaniesByIndustryModel]] = [:]
     
     init(getCategoryWithCompanyService: GetCategoriesWithCompanyServiceProtocol.Type) {
         self.getCategoryWithCompanyService = getCategoryWithCompanyService
@@ -37,13 +37,13 @@ class HomeViewModel {
             case .success(let categories):
                 categories.forEach { item in
                     let company = Company(param: item)
-                    var record = self?.categoryWithCompanies[item.category] ?? []
-                    let value = CategoryWithCompaniesModel(code: item.category, companies: [company])
+                    var record = self?.companiesByIndustry[item.category] ?? []
+                    let value = CompaniesByIndustryModel(code: item.category, companies: [company])
                     record.isEmpty ? record = [value] : record.append(value)
-                    self?.categoryWithCompanies[item.category] = record
+                    self?.companiesByIndustry[item.category] = record
                 }
                 self?.finishUpdate.value = true
-                self?.listValue.value = self?.categoryWithCompanies
+                self?.listValue.value = self?.companiesByIndustry
             }
         }
     }

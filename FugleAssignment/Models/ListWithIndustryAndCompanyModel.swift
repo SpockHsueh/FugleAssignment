@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CategoriesModel: Codable {
+struct ListWithIndustryAndCompanyModel: Codable {
     let name: String
     let category: String
     let code: String

@@ -14,7 +14,7 @@ class HomeVC: UIViewController, Coordinating {
     
     var coordinator: Coordinator?
     var viewModel = HomeViewModel(getCategoryWithCompanyService: GetCategoriesWithCompanyService.self)
-    private var cellData: [[CategoryWithCompaniesModel]] = []
+    private var cellData: [[CompaniesByIndustryModel]] = []
     
     // MARK: - UI Component
     
@@ -96,7 +96,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let companies = cellData[indexPath.row].flatMap{ $0.companies }
         let title = TSECategory(rawValue: cellData[indexPath.row].first?.code ?? "")?.value() ?? ""
-        let event = HomeEvent.navigationToDetail(companies, title)
+        let event = HomeEvent.navigationToCompaniesByIndustry(companies, title)
         coordinator?.eventOccurred(with: event)
     }
     

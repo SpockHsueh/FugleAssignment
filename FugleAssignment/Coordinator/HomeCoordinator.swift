@@ -41,13 +41,20 @@ class HomeCoordinator: Coordinator {
             navigationRootViewController?.setNavigationBarHidden(true, animated: false)
             navigationRootViewController?.tabBarController?.tabBar.isHidden = true
             
-        case .navigationToDetail(let cellData, let title):
-            let categoryListDetailVC = CategoryListDetailVC()
-            categoryListDetailVC.cellData = cellData
-            categoryListDetailVC.title = title
+        case .navigationToCompaniesByIndustry(let cellData, let title):
+            let categoryListDetailCoordinator = CompanyListByIndustryCoordinator()
+            categoryListDetailCoordinator.parentCoordinator = self
+            guard let companyListByIndustryVC = categoryListDetailCoordinator.start() as? CompanyListByIndustryVC,
+                  let navigationController = navigationRootViewController
+            else {
+                return
+            }
+            categoryListDetailCoordinator.rootViewController = navigationController
+            companyListByIndustryVC.cellData = cellData
+            companyListByIndustryVC.title = title
             navigationRootViewController?.navigationBar.backgroundColor = .white
             navigationRootViewController?.navigationBar.tintColor = .black
-            _ = navigationRootViewController?.pushViewController(categoryListDetailVC, animated: true)
+            _ = navigationRootViewController?.pushViewController(companyListByIndustryVC, animated: true)
         }
     }
     
