@@ -20,6 +20,10 @@ enum CompanyListByIndustryCoordinatorEvent: Event {
     case navigationToCompanyDetail(Company)
 }
 
+enum CompanyDetailCoordinatorEvent: Event {
+    case openURL(url: URL?)
+}
+
 protocol Coordinator: AnyObject {
     var parentCoordinator: Coordinator? { get set }
     var children: [Coordinator] { get set }

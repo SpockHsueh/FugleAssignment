@@ -23,8 +23,17 @@ class CompanyDetailCoordinator: Coordinator {
     }
     
     func eventOccurred(with type: Event) {
+        guard let type = type as? CompanyDetailCoordinatorEvent else {
+            return
+        }
         
+        switch type {
+        case .openURL(let url):
+            if let url = url {
+                // TODO url 有些沒有 https 會開啟失敗
+                UIApplication.shared.open(url)
+            }
+        }
     }
-    
     
 }

@@ -13,11 +13,13 @@ class CompanyDetailVC: UIViewController, Coordinating {
     // MARK: - Properties
 
     var coordinator: Coordinator?
+    var viewModel = CompanyDetailViewModel()
     var viewData: Company? {
         didSet {
             setupViewWith(viewData)
         }
     }
+    private var webURL: String?
     
     // MARK: - UI Component
     
@@ -25,6 +27,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "基本資料"
+        label.textColor = .darkGray
         return label
     }()
     
@@ -55,13 +58,13 @@ class CompanyDetailVC: UIViewController, Coordinating {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "董事長"
+        label.textColor = .darkGray
         return label
     }()
     
     lazy var chairmanValueLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .blue
         return label
     }()
     
@@ -69,6 +72,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "總經理"
+        label.textColor = .darkGray
         return label
     }()
     
@@ -82,6 +86,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "產業類別"
+        label.textColor = .darkGray
         return label
     }()
     
@@ -95,6 +100,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "公司成立日期"
+        label.textColor = .darkGray
         return label
     }()
     
@@ -108,6 +114,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "上市日期"
+        label.textColor = .darkGray
         return label
     }()
     
@@ -153,6 +160,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "總機"
+        label.textColor = .darkGray
         return label
     }()
     
@@ -166,6 +174,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "統一編號"
+        label.textColor = .darkGray
         return label
     }()
     
@@ -179,6 +188,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "地址"
+        label.textColor = .darkGray
         return label
     }()
     
@@ -216,6 +226,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "實收資本額 (元)"
+        label.textColor = .darkGray
         return label
     }()
     
@@ -229,6 +240,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "普通每股面額"
+        label.textColor = .darkGray
         return label
     }()
     
@@ -242,6 +254,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "已發行普通股數或 TDR 原股發行股數"
+        label.textColor = .darkGray
         return label
     }()
     
@@ -255,6 +268,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "特別股"
+        label.textColor = .darkGray
         return label
     }()
     
@@ -300,47 +314,76 @@ class CompanyDetailVC: UIViewController, Coordinating {
         view.backgroundColor = .white
         
         setupConstraints()
+        setupBinders()
     }
     
     // MARK: - Private Function
+    
+    private func setupBinders() {
+        viewModel.issuedShares.bind { [weak self] value in
+            if let value = value {
+                self?.issuedSharesValueLabel.text = value
+            }
+        }
+    }
     
     private func setupViewWith(_ data: Company?) {
         
         guard let data = data else {
             return
         }
+        title = "\(data.code) \(data.name)"
         
         companyNameLabel.text = data.name
         actionImageView.image = UIImage(named: "earth")
         chairmanValueLabel.text = data.chairman
         generaManagerValueLabel.text = data.generaManager
         industryCategoryValueLabel.text = TSECategory(rawValue: data.category)?.value() ?? ""
-        establishedValueLabel.text = data.established
-        listingValueLabel.text = data.listing
+        establishedValueLabel.text = data.established.dateFormat()
+        listingValueLabel.text = data.listing.dateFormat()
         phoneValueLabel.text = data.phone
         uniformNumbersValueLabel.text = data.uniformNumber
         addressValueLabel.text = data.address
-        capitalValueLabel.text = data.capital
-        parValuePerShareValueLabel.text = data.parValuePerShare
-        issuedSharesValueLabel.text = data.issuedShares
-        specialSharesValueLabel.text = data.specialShares
+        capitalValueLabel.text = data.capital.moneyFormat()
+        parValuePerShareValueLabel.text = data.parValuePerShare.parValuePerShareFormat()
+        specialSharesValueLabel.text = data.specialShares.moneyFormat(suffix: .share)
+        viewModel.calculatorIssuedShares(capitalValue: data.capital,
+                                         parValuePerShareValue: data.parValuePerShare,
+                                         specialSharesValue: data.specialShares)
+        
+        if let webURL = data.webURL {
+            self.webURL = webURL.webURLFormat()
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+            actionImageView.isUserInteractionEnabled = true
+            actionImageView.addGestureRecognizer(tapGestureRecognizer)
+        }
+    }
+    
+    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+        guard let webURL = webURL else {
+            return
+        }
+
+        let event = CompanyDetailCoordinatorEvent.openURL(url: URL(string: webURL))
+        coordinator?.eventOccurred(with: event)
+    }
+    
+    private func setupActionImageGesture() {
+        
     }
     
     private func setupConstraints() {
         setupStackView()
         
         NSLayoutConstraint.activate([
-            
-            actionImageView.widthAnchor.constraint(equalToConstant: 20),
-            
+                        
             basicInfoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             basicInfoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            basicInfoLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            basicInfoLabel.widthAnchor.constraint(equalToConstant: 20),
+            basicInfoLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
                         
             headerInfoRowStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             headerInfoRowStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            headerInfoRowStackView.topAnchor.constraint(equalTo: basicInfoLabel.bottomAnchor, constant: 20),
+            headerInfoRowStackView.topAnchor.constraint(equalTo: basicInfoLabel.bottomAnchor, constant: 10),
             headerInfoRowStackView.heightAnchor.constraint(equalToConstant: 20),
                         
             basicInfoRow1StackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),

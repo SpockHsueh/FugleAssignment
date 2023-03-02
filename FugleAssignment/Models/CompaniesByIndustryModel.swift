@@ -27,6 +27,7 @@ struct Company {
     let parValuePerShare: String
     let issuedShares: String
     let specialShares: String
+    let webURL: String?
 }
 
 extension Company {
@@ -44,6 +45,7 @@ extension Company {
                   capital: param.capital,
                   parValuePerShare: param.parValuePerShare,
                   issuedShares: param.issuedShares,
-                  specialShares: param.specialShares)
+                  specialShares: param.specialShares,
+                  webURL: param.webURL)
     }
 }
