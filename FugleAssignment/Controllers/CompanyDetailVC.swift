@@ -20,6 +20,12 @@ class CompanyDetailVC: UIViewController, Coordinating {
         }
     }
     private var webURL: String?
+    var trackActionBar: UIBarButtonItem?
+    var unTrackActionBar: UIBarButtonItem?
+    let userDefault = UserDefaults()
+    var saveKey: String = ""
+    var saveValue: String = ""
+    var trackey: String = "TrackingCompany"
     
     // MARK: - UI Component
     
@@ -305,8 +311,17 @@ class CompanyDetailVC: UIViewController, Coordinating {
         stackView.axis = .vertical
         return stackView
     }()
-        
-
+    
+    lazy var trackImage: UIImage = {
+        let image = UIImage(named: "start")!.withRenderingMode(.alwaysOriginal)
+        return image
+    }()
+    
+    lazy var unTrackImage: UIImage = {
+        let image = UIImage(named: "blackStart")!.withRenderingMode(.alwaysOriginal)
+        return image
+    }()
+    
     // MARK: - Lift Cycle
 
     override func viewDidLoad() {
@@ -333,6 +348,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
             return
         }
         title = "\(data.code) \(data.name)"
+        saveKey = data.code
         
         companyNameLabel.text = data.name
         actionImageView.image = UIImage(named: "earth")
@@ -357,6 +373,38 @@ class CompanyDetailVC: UIViewController, Coordinating {
             actionImageView.isUserInteractionEnabled = true
             actionImageView.addGestureRecognizer(tapGestureRecognizer)
         }
+
+        setupRightBarButton()
+    }
+    
+    private func setupRightBarButton() {
+        self.trackActionBar = UIBarButtonItem(image: trackImage, style: .plain, target: self, action: #selector(trackTapped))
+        self.unTrackActionBar = UIBarButtonItem(image: unTrackImage, style: .plain, target: self, action: #selector(unTrackTapped))
+        if let record = userDefault.value(forKey: trackey) as? [String: String] {
+            if record[saveKey] != nil {
+                self.navigationItem.setRightBarButton(unTrackActionBar, animated: false)
+            } else {
+                self.navigationItem.setRightBarButton(trackActionBar, animated: false)
+            }
+        }
+    }
+    
+    @objc func unTrackTapped() {
+        self.navigationItem.setRightBarButton(trackActionBar, animated: false)
+        if var record = userDefault.value(forKey: trackey) as? [String: String] {
+            record[saveKey] = nil
+            userDefault.set(record, forKey: trackey)
+        }
+    }
+    
+    @objc func trackTapped() {
+        if var record = userDefault.value(forKey: trackey) as? [String: String] {
+            record[saveKey] = saveValue
+            userDefault.set(record, forKey: trackey)
+        } else {
+            userDefault.set([saveKey: saveValue], forKey: trackey)
+        }
+        self.navigationItem.setRightBarButton(unTrackActionBar, animated: false)
     }
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
@@ -366,10 +414,6 @@ class CompanyDetailVC: UIViewController, Coordinating {
 
         let event = CompanyDetailCoordinatorEvent.openURL(url: URL(string: webURL))
         coordinator?.eventOccurred(with: event)
-    }
-    
-    private func setupActionImageGesture() {
-        
     }
     
     private func setupConstraints() {
