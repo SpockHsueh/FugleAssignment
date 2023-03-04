@@ -65,7 +65,7 @@ struct GetCategoriesWithCompanyService: GetCategoriesWithCompanyServiceProtocol 
             
             do {
                 let listResult = try JSONDecoder().decode([ListWithIndustryAndCompanyModel].self, from: data)
-                DispatchQueue.main.async {
+                DispatchQueue.main.async {                    
                     completion(.success(listResult))
                 }
             } catch {

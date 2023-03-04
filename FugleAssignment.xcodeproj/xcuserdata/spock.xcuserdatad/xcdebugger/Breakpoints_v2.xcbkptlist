@@ -23,16 +23,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A182DB31-FDD3-4801-A225-F7DCEE8FA77C"
+            uuid = "1D5F0285-9C79-4E30-9837-4AAAD8309322"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FugleAssignment/Controllers/TrackVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CF4EEBCF-CD03-4124-8F16-D7490ADF7BE0"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FugleAssignment/Controllers/CompanyDetailVC.swift"
+            filePath = "FugleAssignment/Controllers/TrackVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "395"
-            endingLineNumber = "395"
-            landmarkName = "unTrackTapped()"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "setupBinders()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

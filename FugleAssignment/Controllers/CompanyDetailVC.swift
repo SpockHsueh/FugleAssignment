@@ -16,6 +16,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
     var viewModel = CompanyDetailViewModel()
     var viewData: Company? {
         didSet {
+            setupSaveKeyAndValueWith(viewData)
             setupViewWith(viewData)
         }
     }
@@ -348,8 +349,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
             return
         }
         title = "\(data.code) \(data.name)"
-        saveKey = data.code
-        
+                
         companyNameLabel.text = data.name
         actionImageView.image = UIImage(named: "earth")
         chairmanValueLabel.text = data.chairman
@@ -377,6 +377,15 @@ class CompanyDetailVC: UIViewController, Coordinating {
         setupRightBarButton()
     }
     
+    private func setupSaveKeyAndValueWith(_ data: Company?) {
+        guard let data = data else {
+            return
+        }
+        
+        saveKey = data.code
+        saveValue = "\(data.code) \(data.name)"
+    }
+    
     private func setupRightBarButton() {
         self.trackActionBar = UIBarButtonItem(image: trackImage, style: .plain, target: self, action: #selector(trackTapped))
         self.unTrackActionBar = UIBarButtonItem(image: unTrackImage, style: .plain, target: self, action: #selector(unTrackTapped))
@@ -390,21 +399,11 @@ class CompanyDetailVC: UIViewController, Coordinating {
     }
     
     @objc func unTrackTapped() {
-        self.navigationItem.setRightBarButton(trackActionBar, animated: false)
-        if var record = userDefault.value(forKey: trackey) as? [String: String] {
-            record[saveKey] = nil
-            userDefault.set(record, forKey: trackey)
-        }
+        showAlert(type: .unTrack, companyInfo: saveValue)
     }
     
     @objc func trackTapped() {
-        if var record = userDefault.value(forKey: trackey) as? [String: String] {
-            record[saveKey] = saveValue
-            userDefault.set(record, forKey: trackey)
-        } else {
-            userDefault.set([saveKey: saveValue], forKey: trackey)
-        }
-        self.navigationItem.setRightBarButton(unTrackActionBar, animated: false)
+        showAlert(type: .track, companyInfo: saveValue)
     }
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
@@ -542,5 +541,65 @@ class CompanyDetailVC: UIViewController, Coordinating {
 
         financeInfoRow4StackView.addArrangedSubview(specialSharesLabel)
         financeInfoRow4StackView.addArrangedSubview(specialSharesValueLabel)
+    }
+    
+    enum AlertType {
+        case track
+        case unTrack
+    }
+    
+    private func showAlert(type: AlertType, companyInfo: String) {
+        switch type {
+        case .track:
+            alert(title: "加入追蹤列表", message: "是否將\(companyInfo)加入追蹤列表內", actionTitle: "加入") { [weak self] in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                if var record = self.userDefault.value(forKey: self.trackey) as? [String: String] {
+                    record[self.saveKey] = self.saveValue
+                    self.userDefault.set(record, forKey: self.trackey)
+                } else {
+                    self.userDefault.set([self.saveKey: self.saveValue], forKey: self.trackey)
+                }
+                self.navigationItem.setRightBarButton(self.unTrackActionBar, animated: false)
+                
+                self.navigationItem.rightBarButtonItem?.isEnabled = false
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.navigationItem.rightBarButtonItem?.isEnabled = true
+                }
+            }
+        case .unTrack:
+            alert(title: "從追蹤列表中移除", message: "是否將\(companyInfo)從追蹤列表中移除？", actionTitle: "移除") { [weak self] in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                self.navigationItem.setRightBarButton(self.trackActionBar, animated: false)
+                
+                self.navigationItem.rightBarButtonItem?.isEnabled = false
+                
+                if var record = self.userDefault.value(forKey: self.trackey) as? [String: String] {
+                    record[self.saveKey] = nil
+                    self.userDefault.set(record, forKey: self.trackey)
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.navigationItem.rightBarButtonItem?.isEnabled = true
+                }
+            }
+        }
+    }
+    
+    private func alert(title: String, message: String?, actionTitle: String, completion: @escaping (() -> Void)) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: actionTitle, style: .default) { _ in completion() })
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel) { _ in completion() })
+        let homeType: CompanyDetailCoordinatorEvent = .showAlert(alert: alert)
+        coordinator?.eventOccurred(with: homeType)
     }
 }

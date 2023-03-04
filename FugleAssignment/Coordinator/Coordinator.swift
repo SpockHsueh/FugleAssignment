@@ -22,6 +22,7 @@ enum CompanyListByIndustryCoordinatorEvent: Event {
 
 enum CompanyDetailCoordinatorEvent: Event {
     case openURL(url: URL?)
+    case showAlert(alert: UIAlertController)
 }
 
 protocol Coordinator: AnyObject {

@@ -36,7 +36,6 @@ class CompanyListByIndustryCoordinator: Coordinator {
             companyDetailVC.viewData = company
             navigationRootViewController?.navigationBar.backgroundColor = .white
             navigationRootViewController?.navigationBar.tintColor = .black
-            
             _ = navigationRootViewController?.pushViewController(companyDetailVC, animated: true)
         }
     }
@@ -44,5 +43,6 @@ class CompanyListByIndustryCoordinator: Coordinator {
     deinit {
         print("CategoryListDetailCoordinator deinit")
     }
+    
     
 }

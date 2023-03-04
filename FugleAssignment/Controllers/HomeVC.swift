@@ -38,8 +38,11 @@ class HomeVC: UIViewController, Coordinating {
         title = "產業別"
         
         setupBinders()
-        navigationToLaunch()
-        viewModel.getGategoriesWithCompany()
+        self.navigationToLaunch()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            self.viewModel.getGategoriesWithCompany()
+        }
     }
     
     func navigationToLaunch() {

@@ -33,6 +33,8 @@ class CompanyDetailCoordinator: Coordinator {
                 // TODO url 有些沒有 https 會開啟失敗
                 UIApplication.shared.open(url)
             }
+        case .showAlert(alert: let alert):
+            rootViewController.present(alert, animated: true)
         }
     }
     

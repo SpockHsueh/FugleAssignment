@@ -17,6 +17,7 @@ final class ObserableObject<T> {
     
     private var listener: ((T) -> Void)?
     
+    
     init(_ value: T) {
         self.value = value
     }

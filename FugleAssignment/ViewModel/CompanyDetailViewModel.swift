@@ -13,10 +13,10 @@ class CompanyDetailViewModel {
     func calculatorIssuedShares(capitalValue: String,
                                         parValuePerShareValue: String,
                                         specialSharesValue: String) {
-        let capitalIntValue = Double(capitalValue) ?? 0
-        let parValuePerShareIntValue = processParValuePerShare(date: parValuePerShareValue)
-        let specialSharesIntValue = Double(specialSharesValue) ?? 0
-        let intValue = Int((capitalIntValue &/ parValuePerShareIntValue) - specialSharesIntValue)
+        let capitalDoubleValue = Double(capitalValue) ?? 0
+        let parValuePerShareDoubleValue = processParValuePerShare(date: parValuePerShareValue)
+        let specialSharesDoubleValue = Double(specialSharesValue) ?? 0
+        let intValue = Int((capitalDoubleValue &/ parValuePerShareDoubleValue) - specialSharesDoubleValue)
         let stringValue = String(intValue).moneyFormat(suffix: .share)
         issuedShares.value = "\(stringValue) (含私募 0 股)"
     }
