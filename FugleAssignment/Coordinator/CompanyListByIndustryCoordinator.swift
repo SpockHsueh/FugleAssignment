@@ -30,9 +30,12 @@ class CompanyListByIndustryCoordinator: Coordinator {
         case .navigationToCompanyDetail(let company):
             let companyDetailCoordinator = CompanyDetailCoordinator()
             companyDetailCoordinator.parentCoordinator = self
-            guard let companyDetailVC = companyDetailCoordinator.start() as? CompanyDetailVC else {
+            guard let companyDetailVC = companyDetailCoordinator.start() as? CompanyDetailVC,
+                  let navigationController = navigationRootViewController
+            else {
                 return
             }
+            companyDetailCoordinator.rootViewController = navigationController
             companyDetailVC.viewData = company
             navigationRootViewController?.navigationBar.backgroundColor = .white
             navigationRootViewController?.navigationBar.tintColor = .black

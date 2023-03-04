@@ -45,6 +45,10 @@ class TrackVC: UIViewController, Coordinating {
         viewModel.getTrackList()
     }
     
+    deinit {
+        print("TrackVC deinit")
+    }
+    
     // MARK: - Private Function
     
     private func setupBinders() {
@@ -105,5 +109,11 @@ extension TrackVC: UITableViewDataSource, UITableViewDelegate {
         let configuration = UISwipeActionsConfiguration(actions: [remove])
         return configuration
         
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let company = cellData[indexPath.row]
+        let event = TrackCoordinatorEvent.navigationToCompanyDetail(company)
+        coordinator?.eventOccurred(with: event)
     }
 }

@@ -7,33 +7,65 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2589B80F-3AC1-4BD4-9A7E-4B831BDE39B3"
+            uuid = "240D54D2-C23A-4372-A9C6-5BD2D424F456"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FugleAssignment/Controllers/CompanyDetailVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "397"
-            endingLineNumber = "397"
-            landmarkName = "setupRightBarButton()"
-            landmarkType = "7">
+            startingLineNumber = "342"
+            endingLineNumber = "342"
+            landmarkName = "CompanyDetailVC"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B3731E88-BB1B-4B59-A47E-0FC5279E72DB"
+            uuid = "824EDC92-3A9C-48F4-A33E-11D661815E94"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FugleAssignment/Controllers/CompanyDetailVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "405"
-            endingLineNumber = "405"
-            landmarkName = "setupRightBarButton()"
-            landmarkType = "7">
+            startingLineNumber = "341"
+            endingLineNumber = "341"
+            landmarkName = "CompanyDetailVC"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "824EDC92-3A9C-48F4-A33E-11D661815E94 - 2e6541fda996ff79"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FugleAssignment.CompanyDetailVC.__deallocating_deinit"
+                  moduleName = "FugleAssignment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spock/Developer/ios/FugleAssignment/FugleAssignment/Controllers/CompanyDetailVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "341"
+                  endingLineNumber = "341"
+                  offsetFromSymbolStart = "53">
+               </Location>
+               <Location
+                  uuid = "824EDC92-3A9C-48F4-A33E-11D661815E94 - 2e6541fda996ff79"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FugleAssignment.CompanyDetailVC.__deallocating_deinit"
+                  moduleName = "FugleAssignment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spock/Developer/ios/FugleAssignment/FugleAssignment/Controllers/CompanyDetailVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "341"
+                  endingLineNumber = "341"
+                  offsetFromSymbolStart = "155">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -25,7 +25,22 @@ class TrackCoordinator: Coordinator {
     }
     
     func eventOccurred(with type: Event) {
+        guard let type = type as? TrackCoordinatorEvent else {
+            return
+        }
         
+        switch type {
+        case .navigationToCompanyDetail(let company):
+            let companyDetailCoordinator = CompanyDetailCoordinator()
+            companyDetailCoordinator.parentCoordinator = self
+            guard let companyDetailVC = companyDetailCoordinator.start() as? CompanyDetailVC else {
+                return
+            }
+            companyDetailVC.viewData = company
+            navigationRootViewController?.navigationBar.backgroundColor = .white
+            navigationRootViewController?.navigationBar.tintColor = .black
+            _ = navigationRootViewController?.pushViewController(companyDetailVC, animated: true)
+        }
     }
     
     deinit {

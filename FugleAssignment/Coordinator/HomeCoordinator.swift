@@ -62,5 +62,4 @@ class HomeCoordinator: Coordinator {
         print("HomeCoordinator deinit")
     }
     
-    
 }

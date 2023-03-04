@@ -337,6 +337,13 @@ class CompanyDetailVC: UIViewController, Coordinating {
         setupRightBarButton()
     }
     
+    deinit {
+        if let coordinator = coordinator {
+            coordinator.parentCoordinator?.childDidFinish(coordinator)
+        }        
+        print("CompanyDetailVC deinit")
+    }
+    
     // MARK: - Private Function
     
     private func setupBinders() {

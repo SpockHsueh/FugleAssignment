@@ -18,8 +18,7 @@ class CompanyDetailCoordinator: Coordinator {
     func start() -> UIViewController {
         let companyDetailVC = CompanyDetailVC()
         companyDetailVC.coordinator = self
-        rootViewController = companyDetailVC
-        return rootViewController
+        return companyDetailVC
     }
     
     func eventOccurred(with type: Event) {
@@ -36,6 +35,10 @@ class CompanyDetailCoordinator: Coordinator {
         case .showAlert(alert: let alert):
             rootViewController.present(alert, animated: true)
         }
+    }
+    
+    deinit {
+        print("CompanyDetailCoordinator deinit")
     }
     
 }

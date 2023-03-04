@@ -41,7 +41,7 @@ class CompanyListByIndustryVC: UIViewController, Coordinating {
     }
     
     deinit {
-        print("CategoryListDetailVC deinit")
+        print("CompanyListByIndustryVC deinit")
     }
 }
 

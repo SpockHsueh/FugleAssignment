@@ -45,6 +45,10 @@ class HomeVC: UIViewController, Coordinating {
         }
     }
     
+    deinit {
+        print("HomeVC deinit")
+    }
+    
     func navigationToLaunch() {
         let event = HomeEvent.navigationToLaunch
         coordinator?.eventOccurred(with: event)

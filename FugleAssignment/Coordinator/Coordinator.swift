@@ -25,6 +25,10 @@ enum CompanyDetailCoordinatorEvent: Event {
     case showAlert(alert: UIAlertController)
 }
 
+enum TrackCoordinatorEvent: Event {
+    case navigationToCompanyDetail(Company)
+}
+
 protocol Coordinator: AnyObject {
     var parentCoordinator: Coordinator? { get set }
     var children: [Coordinator] { get set }
