@@ -54,6 +54,7 @@ class TrackVC: UIViewController, Coordinating {
     private func setupBinders() {
         viewModel.trackList.bind { [weak self] trackList in
             if let trackList = trackList {
+                // TODO can sorted
                 self?.cellData = trackList
                 self?.tableView.reloadData()
             }

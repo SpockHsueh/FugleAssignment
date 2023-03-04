@@ -26,7 +26,7 @@ class HomeVC: UIViewController, Coordinating {
         table.dataSource = self
         return table
     }()
-
+    
     // MARK: - Lift Cycle
     
     override func viewDidLoad() {
@@ -39,7 +39,7 @@ class HomeVC: UIViewController, Coordinating {
         
         setupBinders()
         self.navigationToLaunch()
-
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             self.viewModel.getGategoriesWithCompany()
         }
@@ -64,9 +64,12 @@ class HomeVC: UIViewController, Coordinating {
         
         viewModel.listValue.bind { [weak self] listValue in
             if let listValue = listValue {
-                listValue.forEach { _, value in
-                    self?.cellData.append(value)
-                }
+                listValue
+                    .sorted {
+                        $0.key < $1.key
+                    }.forEach { _, value in
+                        self?.cellData.append(value)
+                    }
                 self?.tableView.reloadData()
             }
         }
@@ -94,7 +97,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         cell.layoutIfNeeded()
         return cell
     }
-        
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70

@@ -568,11 +568,16 @@ class CompanyDetailVC: UIViewController, Coordinating {
         case .track:
             alert(title: "加入追蹤列表", message: "是否將\(companyInfo)加入追蹤列表內", actionTitle: "加入") { [weak self] in
                 
-                guard let self = self else {
+                guard let self = self,
+                      let encoded = try? JSONEncoder().encode(self.viewData)
+                else {
                     return
                 }
                 
-                if let encoded = try? JSONEncoder().encode(self.viewData) {
+                if var record = self.userDefault.value(forKey: self.trackey) as? [String: Any] {
+                    record[self.saveKey] = encoded
+                    self.userDefault.set(record, forKey: self.trackey)
+                } else {
                     self.userDefault.set([self.saveKey: encoded], forKey: self.trackey)
                 }
                 

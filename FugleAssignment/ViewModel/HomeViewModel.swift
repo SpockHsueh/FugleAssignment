@@ -35,7 +35,8 @@ class HomeViewModel {
                 self?.finishUpdate.value = false
                 
             case .success(let categories):
-                categories.forEach { item in
+                categories
+                    .forEach { item in
                     let company = Company(param: item)
                     var record = self?.companiesByIndustry[item.category] ?? []
                     let value = CompaniesByIndustryModel(code: item.category, companies: [company])
