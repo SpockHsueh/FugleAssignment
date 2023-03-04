@@ -26,7 +26,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
     let userDefault = UserDefaults()
     var saveKey: String = ""
     var saveValue: String = ""
-    var trackey: String = "TrackingCompany"
+    let trackey: String = "TrackingCompany"
     
     // MARK: - UI Component
     
@@ -333,6 +333,10 @@ class CompanyDetailVC: UIViewController, Coordinating {
         setupBinders()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        setupRightBarButton()
+    }
+    
     // MARK: - Private Function
     
     private func setupBinders() {
@@ -395,6 +399,8 @@ class CompanyDetailVC: UIViewController, Coordinating {
             } else {
                 self.navigationItem.setRightBarButton(trackActionBar, animated: false)
             }
+        } else {
+            self.navigationItem.setRightBarButton(trackActionBar, animated: false)
         }
     }
     

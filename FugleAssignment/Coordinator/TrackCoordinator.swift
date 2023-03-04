@@ -20,6 +20,7 @@ class TrackCoordinator: Coordinator {
         let trackVC = TrackVC()
         trackVC.coordinator = self
         rootViewController = UINavigationController(rootViewController: trackVC)
+        navigationRootViewController?.navigationBar.prefersLargeTitles = true
         return rootViewController
     }
     
