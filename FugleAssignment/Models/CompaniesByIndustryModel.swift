@@ -14,6 +14,7 @@ struct CompaniesByIndustryModel {
 
 struct Company: Codable {
     let name: String
+    let shortName: String
     let category: String
     let code: String
     let chairman: String
@@ -33,6 +34,7 @@ struct Company: Codable {
 extension Company {
     init(param: ListWithIndustryAndCompanyModel) {
         self.init(name: param.name,
+                  shortName: param.shortName,
                   category: param.category,
                   code: param.code,
                   chairman: param.chairman,

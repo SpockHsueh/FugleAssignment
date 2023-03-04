@@ -208,12 +208,14 @@ class CompanyDetailVC: UIViewController, Coordinating {
     lazy var contactInfoRow1StackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.distribution = .equalSpacing
         return stackView
     }()
     
     lazy var contactInfoRow2StackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.distribution = .equalSpacing
         return stackView
     }()
     
@@ -359,7 +361,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
         guard let data = data else {
             return
         }
-        title = "\(data.code) \(data.name)"
+        title = "\(data.code) \(data.shortName)"
                 
         companyNameLabel.text = data.name
         actionImageView.image = UIImage(named: "earth")
@@ -616,8 +618,8 @@ class CompanyDetailVC: UIViewController, Coordinating {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: actionTitle, style: .default) { _ in completion() })
-        alert.addAction(UIAlertAction(title: "取消", style: .cancel) { _ in completion() })
-        let homeType: CompanyDetailCoordinatorEvent = .showAlert(alert: alert)
-        coordinator?.eventOccurred(with: homeType)
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+        let event: CompanyDetailCoordinatorEvent = .showAlert(alert: alert)
+        coordinator?.eventOccurred(with: event)
     }
 }

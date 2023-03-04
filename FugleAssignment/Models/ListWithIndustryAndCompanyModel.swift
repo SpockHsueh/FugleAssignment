@@ -23,9 +23,11 @@ struct ListWithIndustryAndCompanyModel: Codable {
     let issuedShares: String
     let specialShares: String
     let webURL: String?
+    let shortName: String
     
     enum CodingKeys: String, CodingKey {
         case name = "公司名稱"
+        case shortName = "公司簡稱"
         case category = "產業別"
         case code = "公司代號"
         case chairman = "董事長"

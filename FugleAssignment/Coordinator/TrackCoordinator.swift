@@ -30,6 +30,9 @@ class TrackCoordinator: Coordinator {
         }
         
         switch type {
+        case .showAlert(alert: let alert):
+            navigationRootViewController?.present(alert, animated: true)
+            
         case .navigationToCompanyDetail(let company):
             let companyDetailCoordinator = CompanyDetailCoordinator()
             companyDetailCoordinator.parentCoordinator = self

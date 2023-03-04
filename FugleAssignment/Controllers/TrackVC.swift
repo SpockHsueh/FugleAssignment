@@ -70,6 +70,37 @@ class TrackVC: UIViewController, Coordinating {
         }
     }
     
+    enum AlertType {
+        case unTrack
+    }
+    
+    private func showAlert(type: AlertType,
+                           companyInfo: String,
+                           key: String,
+                           index: Int
+    ) {
+        switch type {
+        case .unTrack:
+            alert(title: "從追蹤列表中移除", message: "是否將\(companyInfo)從追蹤列表中移除？", actionTitle: "移除") { [weak self] in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                self.handleRemove(saveKey: key, index: index)
+            }
+        }
+    }
+    
+    private func alert(title: String, message: String?, actionTitle: String, completion: @escaping (() -> Void)) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: actionTitle, style: .default) { _ in completion() })
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+        let event = TrackCoordinatorEvent.showAlert(alert: alert)
+        coordinator?.eventOccurred(with: event)
+    }
+    
 }
 
 // MARK: - Extension
@@ -100,10 +131,11 @@ extension TrackVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let key = cellData[indexPath.row].code
+        let name = cellData[indexPath.row].name
         let remove = UIContextualAction(style: .destructive,
                                         title: "移除") { [weak self] (action, view, completionHandler) in
             
-            self?.handleRemove(saveKey: key, index: indexPath.row)
+            self?.showAlert(type: .unTrack, companyInfo: "\(key) \(name)", key: key, index: indexPath.row)
             completionHandler(true)
         }
         remove.backgroundColor = .systemRed

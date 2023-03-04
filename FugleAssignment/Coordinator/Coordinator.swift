@@ -27,6 +27,7 @@ enum CompanyDetailCoordinatorEvent: Event {
 
 enum TrackCoordinatorEvent: Event {
     case navigationToCompanyDetail(Company)
+    case showAlert(alert: UIAlertController)
 }
 
 protocol Coordinator: AnyObject {

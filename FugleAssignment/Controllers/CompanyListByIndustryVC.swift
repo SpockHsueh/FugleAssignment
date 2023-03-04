@@ -56,7 +56,7 @@ extension CompanyListByIndustryVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.identifier, for: indexPath)
         let data = cellData[indexPath.row]
-        let text = "\(data.code) \(data.name)"
+        let text = "\(data.code) \(data.shortName)"
         let cellDataModel = CategoryCellDataModel(text: text, image: UIImage(named: "rightButton")!)
         if let cell = cell as? CellConfigurable
         {
