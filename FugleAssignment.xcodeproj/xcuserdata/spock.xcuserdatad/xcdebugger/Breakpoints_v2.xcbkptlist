@@ -7,48 +7,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A7DE10F7-A4DB-458A-A36B-EDBAFA382A54"
+            uuid = "2589B80F-3AC1-4BD4-9A7E-4B831BDE39B3"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FugleAssignment/Coordinator/CompanyDetailCoordinator.swift"
+            filePath = "FugleAssignment/Controllers/CompanyDetailVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "eventOccurred(with:)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1D5F0285-9C79-4E30-9837-4AAAD8309322"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FugleAssignment/Controllers/TrackVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "tableView(_:cellForRowAt:)"
+            startingLineNumber = "397"
+            endingLineNumber = "397"
+            landmarkName = "setupRightBarButton()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CF4EEBCF-CD03-4124-8F16-D7490ADF7BE0"
+            uuid = "B3731E88-BB1B-4B59-A47E-0FC5279E72DB"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FugleAssignment/Controllers/TrackVC.swift"
+            filePath = "FugleAssignment/Controllers/CompanyDetailVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
-            landmarkName = "setupBinders()"
+            startingLineNumber = "405"
+            endingLineNumber = "405"
+            landmarkName = "setupRightBarButton()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

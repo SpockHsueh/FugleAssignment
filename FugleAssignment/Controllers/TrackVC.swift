@@ -14,7 +14,7 @@ class TrackVC: UIViewController, Coordinating {
     
     var coordinator: Coordinator?
     var viewModel = TrackViewModel()
-    private var cellData: [String] = []
+    private var cellData: [Company] = []
     let userDefault = UserDefaults()
     private let trackey: String = "TrackingCompany"
     
@@ -50,14 +50,14 @@ class TrackVC: UIViewController, Coordinating {
     private func setupBinders() {
         viewModel.trackList.bind { [weak self] trackList in
             if let trackList = trackList {
-                self?.cellData = Array(trackList.values.map { $0 })
+                self?.cellData = trackList
                 self?.tableView.reloadData()
             }
         }
     }
     
     private func handleRemove(saveKey: String, index: Int) {
-        if var record = userDefault.value(forKey: trackey) as? [String: String] {
+        if var record = userDefault.value(forKey: trackey) as? [String: Any] {
             record[saveKey] = nil
             userDefault.set(record, forKey: self.trackey)
             cellData.remove(at: index)
@@ -77,7 +77,7 @@ extension TrackVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.identifier, for: indexPath)
         let data = cellData[indexPath.row]
-        let cellDataModel = CategoryCellDataModel(text: data,
+        let cellDataModel = CategoryCellDataModel(text: "\(data.code) \(data.name)",
                                                   image: UIImage(named: "rightButton")!)
         if let cell = cell as? CellConfigurable
         {
@@ -94,17 +94,16 @@ extension TrackVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        if let data = cellData[indexPath.row].split(separator: " ").first {
-            let remove = UIContextualAction(style: .destructive,
-                                            title: "移除") { [weak self] (action, view, completionHandler) in
-                
-                self?.handleRemove(saveKey: String(data), index: indexPath.row)
-                completionHandler(true)
-            }
-            remove.backgroundColor = .systemRed
-            let configuration = UISwipeActionsConfiguration(actions: [remove])
-            return configuration
+        let key = cellData[indexPath.row].code
+        let remove = UIContextualAction(style: .destructive,
+                                        title: "移除") { [weak self] (action, view, completionHandler) in
+            
+            self?.handleRemove(saveKey: key, index: indexPath.row)
+            completionHandler(true)
         }
-        return nil
+        remove.backgroundColor = .systemRed
+        let configuration = UISwipeActionsConfiguration(actions: [remove])
+        return configuration
+        
     }
 }

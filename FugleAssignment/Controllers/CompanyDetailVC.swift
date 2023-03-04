@@ -393,8 +393,10 @@ class CompanyDetailVC: UIViewController, Coordinating {
     private func setupRightBarButton() {
         self.trackActionBar = UIBarButtonItem(image: trackImage, style: .plain, target: self, action: #selector(trackTapped))
         self.unTrackActionBar = UIBarButtonItem(image: unTrackImage, style: .plain, target: self, action: #selector(unTrackTapped))
-        if let record = userDefault.value(forKey: trackey) as? [String: String] {
-            if record[saveKey] != nil {
+        if let record = userDefault.value(forKey: trackey) as? [String: Any?] {
+            if let data = record[saveKey] as? Data,
+               let _ = try? JSONDecoder().decode(Company.self, from: data)
+            {
                 self.navigationItem.setRightBarButton(unTrackActionBar, animated: false)
             } else {
                 self.navigationItem.setRightBarButton(trackActionBar, animated: false)
@@ -563,12 +565,10 @@ class CompanyDetailVC: UIViewController, Coordinating {
                     return
                 }
                 
-                if var record = self.userDefault.value(forKey: self.trackey) as? [String: String] {
-                    record[self.saveKey] = self.saveValue
-                    self.userDefault.set(record, forKey: self.trackey)
-                } else {
-                    self.userDefault.set([self.saveKey: self.saveValue], forKey: self.trackey)
+                if let encoded = try? JSONEncoder().encode(self.viewData) {
+                    self.userDefault.set([self.saveKey: encoded], forKey: self.trackey)
                 }
+                
                 self.navigationItem.setRightBarButton(self.unTrackActionBar, animated: false)
                 
                 self.navigationItem.rightBarButtonItem?.isEnabled = false
@@ -588,7 +588,7 @@ class CompanyDetailVC: UIViewController, Coordinating {
                 
                 self.navigationItem.rightBarButtonItem?.isEnabled = false
                 
-                if var record = self.userDefault.value(forKey: self.trackey) as? [String: String] {
+                if var record = self.userDefault.value(forKey: self.trackey) as? [String: Any] {
                     record[self.saveKey] = nil
                     self.userDefault.set(record, forKey: self.trackey)
                 }

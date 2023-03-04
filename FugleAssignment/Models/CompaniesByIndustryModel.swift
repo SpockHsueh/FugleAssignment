@@ -12,7 +12,7 @@ struct CompaniesByIndustryModel {
     let companies: [Company]
 }
 
-struct Company {
+struct Company: Codable {
     let name: String
     let category: String
     let code: String
